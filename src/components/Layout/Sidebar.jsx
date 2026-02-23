@@ -32,22 +32,22 @@ export default function Sidebar() {
         },
         {
             path: '/settings',
-            name: 'Ayarlar',
+            name: 'Einstellungen',
             icon: <Settings className="h-5 w-5" />,
-            badge: !hasSettings && 'Gerekli'
+            badge: !hasSettings && 'Erforderlich'
         },
         {
             path: '/ratecard',
-            name: 'Fiyat Kartı',
+            name: 'Preiskarte',
             icon: <CreditCard className="h-5 w-5" />,
-            badge: !hasRateCard && 'Gerekli'
+            badge: !hasRateCard && 'Erforderlich'
         },
         {
             path: '/offers/new',
-            name: 'Teklif Oluştur',
+            name: 'Angebot erstellen',
             icon: <FileText className="h-5 w-5" />,
             disabled: !canCreateOffer,
-            tooltip: !canCreateOffer && 'Önce ayarları ve fiyat kartını tamamlayın'
+            tooltip: !canCreateOffer && 'Füllen Sie zunächst die Einstellungen und die Preiskarte aus'
         }
     ];
 
@@ -100,7 +100,7 @@ export default function Sidebar() {
                     className="w-full flex items-center justify-center text-primary-100 hover:text-white hover:bg-primary-700"
                 >
                     <LogOut className="h-5 w-5 mr-2" />
-                    Çıkış Yap
+                    Abmelden
                 </Button>
             </div>
         </>

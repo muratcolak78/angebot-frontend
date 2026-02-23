@@ -25,7 +25,7 @@ export default function OfferPDF() {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             setPdfUrl(url);
         } catch (error) {
-            toast.error('PDF yüklenirken hata oluştu!');
+            toast.error('Fehler beim Laden von PDF!');
         } finally {
             setLoading(false);
         }
@@ -47,7 +47,7 @@ export default function OfferPDF() {
 
     const handleEmail = () => {
         // Mail gönderme işlemi
-        toast.success('Mail gönderme özelliği yakında eklenecek!');
+        toast.success('Die Funktion zum Versenden von E-Mails wird bald hinzugefügt!');
     };
 
     if (loading) {
@@ -66,10 +66,10 @@ export default function OfferPDF() {
                             onClick={() => navigate('/')}
                         >
                             <ArrowLeft className="h-4 w-4 mr-2" />
-                            Geri
+                            Züruck
                         </Button>
                         <h1 className="text-lg font-medium text-gray-900">
-                            Teklif #{id}
+                            Angebot #{id}
                         </h1>
                     </div>
 
@@ -80,7 +80,7 @@ export default function OfferPDF() {
                             onClick={handlePrint}
                         >
                             <Printer className="h-4 w-4 mr-2" />
-                            Yazdır
+                            Drucken
                         </Button>
                         <Button
                             variant="outline"
@@ -88,14 +88,14 @@ export default function OfferPDF() {
                             onClick={handleDownload}
                         >
                             <Download className="h-4 w-4 mr-2" />
-                            İndir
+                            Download
                         </Button>
                         <Button
                             size="sm"
                             onClick={handleEmail}
                         >
                             <Mail className="h-4 w-4 mr-2" />
-                            E-Posta Gönder
+                            Send per E-mail
                         </Button>
                     </div>
                 </div>

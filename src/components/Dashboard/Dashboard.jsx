@@ -10,16 +10,16 @@ export default function Dashboard() {
     const setupSteps = [
         {
             id: 'settings',
-            title: 'Şirket Ayarları',
-            description: 'Firma bilgilerinizi, logonuzu ve imzanızı ekleyin',
+            title: 'Unternehmenseinstellungen',
+            description: 'Fügen Sie Ihre Unternehmensinformationen, Ihr Logo und Ihre Unterschrift hinzu',
             completed: hasSettings,
             icon: Settings,
             path: '/settings'
         },
         {
             id: 'ratecard',
-            title: 'Fiyat Kartı',
-            description: 'm² fiyatlarını ve kesintileri belirleyin',
+            title: 'Preiskarte',
+            description: 'm²-Preise und Abzüge festlegen',
             completed: hasRateCard,
             icon: CreditCard,
             path: '/ratecard'
@@ -33,10 +33,10 @@ export default function Dashboard() {
             {/* Hoş Geldin Mesajı */}
             <div className="bg-white rounded-lg shadow-sm p-6">
                 <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                    Hoş Geldiniz! 👋
+                    Herzlich willkommen!
                 </h1>
                 <p className="text-gray-600">
-                    Teklif oluşturmaya başlamak için aşağıdaki adımları tamamlayın.
+                    Führen Sie die folgenden Schritte aus, um ein Angebot zu erstellen.
                 </p>
             </div>
 
@@ -73,7 +73,7 @@ export default function Dashboard() {
                                     className="mt-4"
                                     size="sm"
                                 >
-                                    Tamamla
+                                    Vollständig
                                 </Button>
                             )}
                         </div>
@@ -81,15 +81,15 @@ export default function Dashboard() {
                 })}
             </div>
 
-            {/* Teklif Oluştur Butonu */}
+            {/* Create Offer Button */}
             <div className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-lg p-8 text-white">
                 <div className="flex flex-col md:flex-row items-center justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold mb-2">Hazır mısınız?</h2>
+                        <h2 className="text-2xl font-bold mb-2">Sind Sie bereit?</h2>
                         <p className="text-primary-100">
                             {allCompleted
-                                ? 'Artık teklif oluşturmaya başlayabilirsiniz!'
-                                : 'Lütfen önce tüm adımları tamamlayın.'}
+                                ? 'Jetzt können Sie mit der Erstellung von Angeboten beginnen!'
+                                : 'Bitte führen Sie zunächst alle Schritte aus.'}
                         </p>
                     </div>
 
@@ -100,18 +100,18 @@ export default function Dashboard() {
                         size="lg"
                     >
                         <FileText className="h-5 w-5 mr-2" />
-                        Teklif Oluştur
+                        Angebot erstellen
                     </Button>
                 </div>
             </div>
 
-            {/* Son Teklifler (Örnek) */}
+            {/* Final Offers (Sample)*/}
             <div className="bg-white rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-medium text-gray-900 mb-4">
-                    Son Teklifleriniz
+                    Letzte Angebote
                 </h3>
                 <div className="text-center py-8 text-gray-500">
-                    Henüz teklif oluşturmadınız. Yukarıdaki butonu kullanarak ilk teklifinizi oluşturun.
+                    Sie haben noch kein Angebot gemacht. Erstellen Sie Ihr erstes Angebot über die Schaltfläche oben.
                 </div>
             </div>
         </div>

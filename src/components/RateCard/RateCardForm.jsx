@@ -61,10 +61,10 @@ export default function RateCardForm() {
             }
 
             updateSetupStatus('ratecard', true);
-            toast.success('Fiyat kartı başarıyla kaydedildi!');
+            toast.success('Die Preiskarte wurde erfolgreich registriert!');
             navigate('/');
         } catch (error) {
-            toast.error('Fiyat kartı kaydedilirken hata oluştu!');
+            toast.error('Fehler beim Speichern der Preiskarte!');
             console.error('RateCard save error:', error);
         } finally {
             setSaving(false);
@@ -81,16 +81,16 @@ export default function RateCardForm() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Fiyat Kartı</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Fiyatlar */}
+                    {/* KOsten*/}
                     <div className="border-b border-gray-200 pb-6">
                         <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
                             <Euro className="h-5 w-5 mr-2 text-primary-600" />
-                            m² Fiyatları
+                            m² Preise
                         </h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Input
-                                label="Duvar Boyama (€/m²)"
+                                label="Wandmalerei (€/m²)"
                                 type="number"
                                 step="0.01"
                                 min="0"
@@ -100,7 +100,7 @@ export default function RateCardForm() {
                                 required
                             />
                             <Input
-                                label="Duvar Kağıdı (€/m²)"
+                                label="Tapete (€/m²)"
                                 type="number"
                                 step="0.01"
                                 min="0"
@@ -110,7 +110,7 @@ export default function RateCardForm() {
                                 required
                             />
                             <Input
-                                label="Tavan İşleri (€/m²)"
+                                label="Arbeiten an der Decke (€/m²)"
                                 type="number"
                                 step="0.01"
                                 min="0"
@@ -126,12 +126,12 @@ export default function RateCardForm() {
                     <div className="border-b border-gray-200 pb-6">
                         <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
                             <Calculator className="h-5 w-5 mr-2 text-primary-600" />
-                            Kesinti Değerleri
+                            Abzugswerte
                         </h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Input
-                                label="Pencere Kesintisi (€/m²)"
+                                label="Fenster (€/m²)"
                                 type="number"
                                 step="0.01"
                                 min="0"
@@ -141,7 +141,7 @@ export default function RateCardForm() {
                                 required
                             />
                             <Input
-                                label="Kapı Kesintisi (€/adet)"
+                                label="Tür (€/stück)"
                                 type="number"
                                 step="0.01"
                                 min="0"
@@ -155,10 +155,10 @@ export default function RateCardForm() {
 
                     {/* Örnek Hesaplama */}
                     <div className="bg-blue-50 rounded-lg p-4">
-                        <h4 className="text-sm font-medium text-blue-800 mb-2">Örnek Hesaplama</h4>
+                        <h4 className="text-sm font-medium text-blue-800 mb-2">Berechnungsbeispiel</h4>
                         <p className="text-sm text-blue-600">
-                            100m² duvar boyama: €{(100 * formData.wallM2Price).toFixed(2)}<br />
-                            2 kapı kesintisi: €{(2 * formData.doorDeductionM2).toFixed(2)}
+                            100m² Wandmalerei: €{(100 * formData.wallM2Price).toFixed(2)}<br />
+                            2 Tür: €{(2 * formData.doorDeductionM2).toFixed(2)}
                         </p>
                     </div>
 
@@ -169,14 +169,14 @@ export default function RateCardForm() {
                             variant="outline"
                             onClick={() => navigate('/')}
                         >
-                            İptal
+                            Abbrechnen
                         </Button>
                         <Button
                             type="submit"
                             loading={saving}
                         >
                             <Save className="h-4 w-4 mr-2" />
-                            Kaydet
+                            Speichern
                         </Button>
                     </div>
                 </form>

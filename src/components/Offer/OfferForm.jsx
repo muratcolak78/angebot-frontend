@@ -67,7 +67,7 @@ export default function OfferForm() {
             const response = await api.get(`/offers/${id}`);
             setFormData(response.data);
         } catch (error) {
-            toast.error('Teklif yüklenirken hata oluştu!');
+            toast.error('Fehler beim Laden des Angebots!');
             navigate('/');
         } finally {
             setLoading(false);
@@ -111,14 +111,14 @@ export default function OfferForm() {
         try {
             if (id) {
                 await api.put(`/offers/${id}`, formData);
-                toast.success('Teklif güncellendi!');
+                toast.success('Angebot aktualisiert!');
             } else {
                 await api.post('/offers', formData);
-                toast.success('Teklif oluşturuldu!');
+                toast.success('Vorschlag erstellt!');
             }
             navigate('/');
         } catch (error) {
-            toast.error('Teklif kaydedilirken hata oluştu!');
+            toast.error('Fehler beim Speichern des Angebots!');
             console.error('Offer save error:', error);
         } finally {
             setSaving(false);
@@ -139,9 +139,9 @@ export default function OfferForm() {
             link.click();
             link.remove();
 
-            toast.success('PDF indiriliyor...');
+            toast.success('Herunterladen von PDF...');
         } catch (error) {
-            toast.error('PDF oluşturulamadı!');
+            toast.error('PDF-Erstellung fehlgeschlagen!');
         }
     };
 
@@ -153,14 +153,14 @@ export default function OfferForm() {
         <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    {id ? 'Teklif Düzenle' : 'Yeni Teklif Oluştur'}
+                    {id ? 'Angebot bearbeiten' : 'Neues Angebot erstellen'}
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Müşteri Seçimi */}
+                    {/* Customer Selection */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Müşteri Seçin
+                            Kunde auswählen
                         </label>
                         <select
                             value={formData.customerId}
@@ -168,7 +168,7 @@ export default function OfferForm() {
                             className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                             required
                         >
-                            <option value="">Müşteri seçin...</option>
+                            <option value="">Wählen Sie Kunde aus..</option>
                             {customers.map(customer => (
                                 <option key={customer.id} value={customer.id}>
                                     {customer.firstName} {customer.lastName} - {customer.email}
@@ -177,13 +177,13 @@ export default function OfferForm() {
                         </select>
                     </div>
 
-                    {/* Ölçüler */}
+                    {/* Dimensions*/}
                     <div className="border-t border-gray-200 pt-6">
                         <h3 className="text-lg font-medium text-gray-900 mb-4">Ölçüler</h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Input
-                                label="Duvar (m²)"
+                                label="Wall (m²)"
                                 type="number"
                                 step="0.01"
                                 min="0"
@@ -193,7 +193,7 @@ export default function OfferForm() {
                                 required
                             />
                             <Input
-                                label="Duvar Kağıdı (m²)"
+                                label="Tapete (m²)"
                                 type="number"
                                 step="0.01"
                                 min="0"
@@ -202,7 +202,7 @@ export default function OfferForm() {
                                 onChange={handleInputChange}
                             />
                             <Input
-                                label="Tavan (m²)"
+                                label="Decke (m²)"
                                 type="number"
                                 step="0.01"
                                 min="0"
@@ -211,7 +211,7 @@ export default function OfferForm() {
                                 onChange={handleInputChange}
                             />
                             <Input
-                                label="Pencere (m²)"
+                                label="Fenster (m²)"
                                 type="number"
                                 step="0.01"
                                 min="0"
@@ -220,7 +220,7 @@ export default function OfferForm() {
                                 onChange={handleInputChange}
                             />
                             <Input
-                                label="Kapı (adet)"
+                                label="Tür (Stück)"
                                 type="number"
                                 min="0"
                                 name="doors"
@@ -230,35 +230,35 @@ export default function OfferForm() {
                         </div>
                     </div>
 
-                    {/* Hesaplanan Tutarlar */}
+                    {/* Berechnete Beträge */}
                     {rateCard && (
                         <div className="bg-gray-50 rounded-lg p-6">
-                            <h3 className="text-lg font-medium text-gray-900 mb-4">Hesaplanan Tutarlar</h3>
+                            <h3 className="text-lg font-medium text-gray-900 mb-4">Berechnete Beträge</h3>
 
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
-                                    <span>Duvar Boyama:</span>
+                                    <span>Wandmalerei:</span>
                                     <span className="font-medium">€ {calculated.wallTotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
-                                    <span>Duvar Kağıdı:</span>
+                                    <span>Tapete:</span>
                                     <span className="font-medium">€ {calculated.wallpaperTotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
-                                    <span>Tavan:</span>
+                                    <span>Decke:</span>
                                     <span className="font-medium">€ {calculated.ceilingTotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm text-red-600">
-                                    <span>Pencere Kesintisi:</span>
+                                    <span>Fenster :</span>
                                     <span>-€ {calculated.windowDeduction.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm text-red-600">
-                                    <span>Kapı Kesintisi:</span>
+                                    <span>Tür :</span>
                                     <span>-€ {calculated.doorDeduction.toFixed(2)}</span>
                                 </div>
                                 <div className="border-t border-gray-200 pt-2 mt-2">
                                     <div className="flex justify-between font-bold text-lg">
-                                        <span>Toplam:</span>
+                                        <span>Insgesamt:</span>
                                         <span className="text-primary-600">€ {calculated.grandTotal.toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between text-sm text-gray-600 mt-1">
@@ -266,7 +266,7 @@ export default function OfferForm() {
                                         <span>€ {(calculated.grandTotal * 0.19).toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between font-bold text-primary-700">
-                                        <span>Brüt Toplam:</span>
+                                        <span>Brutto Gesamt:</span>
                                         <span>€ {(calculated.grandTotal * 1.19).toFixed(2)}</span>
                                     </div>
                                 </div>
@@ -284,14 +284,14 @@ export default function OfferForm() {
                                     onClick={handleDownloadPDF}
                                 >
                                     <Download className="h-4 w-4 mr-2" />
-                                    PDF İndir
+                                    PDF herunterladen
                                 </Button>
                                 <Button
                                     type="button"
                                     variant="outline"
                                 >
                                     <Mail className="h-4 w-4 mr-2" />
-                                    E-Posta Gönder
+                                    Send per E-mail
                                 </Button>
                             </>
                         )}
@@ -301,7 +301,7 @@ export default function OfferForm() {
                             onClick={() => navigate('/')}
                         >
                             <X className="h-4 w-4 mr-2" />
-                            İptal
+                            Abbrechnen
                         </Button>
                         <Button
                             type="submit"
