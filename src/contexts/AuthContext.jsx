@@ -47,10 +47,10 @@ export function AuthProvider({ children }) {
             localStorage.setItem('user', JSON.stringify({ email }));
             setUser({ email });
             await checkUserSetup();
-            toast.success('Başarıyla giriş yapıldı!');
+            toast.success('Erfolgreiche Anmeldung!');
             return true;
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Giriş başarısız!');
+            toast.error(error.response?.data?.message || 'Anmeldung fehlgeschlagen!');
             return false;
         }
     };
@@ -58,10 +58,10 @@ export function AuthProvider({ children }) {
     const register = async (email, password) => {
         try {
             await apiRegister(email, password);
-            toast.success('Kayıt başarılı! Şimdi giriş yapabilirsiniz.');
+            toast.success('Anmeldung erfolgreich! Sie können sich jetzt einloggen.');
             return true;
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Kayıt başarısız!');
+            toast.error(error.response?.data?.message || 'Registrierung fehlgeschlagen!');
             return false;
         }
     };
@@ -72,7 +72,7 @@ export function AuthProvider({ children }) {
         setUser(null);
         setHasSettings(false);
         setHasRateCard(false);
-        toast.success('Çıkış yapıldı!');
+        toast.success('Abgemeldet!');
     };
 
     const updateSetupStatus = (type, value) => {

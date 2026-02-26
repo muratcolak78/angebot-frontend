@@ -1,17 +1,14 @@
 // services/api.js
 import axios from 'axios';
 
-// SABIT URL - process.env KULLANMA!
 const API_URL = 'http://localhost:8080/api';
-
-console.log('API URL:', API_URL); // Debug için
 
 const api = axios.create({
     baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
     },
-    timeout: 10000, // 10 saniye timeout
+    timeout: 30000,
 });
 
 // Request interceptor
@@ -21,11 +18,17 @@ api.interceptors.request.use(
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
+
+        // PDF isteklerinde responseType'i blob olarak ayarla
+        if (config.url.includes('/pdf/')) {
+            config.responseType = 'blob';
+        }
+
         console.log('API Request:', config.method.toUpperCase(), config.url);
+        console.log('Token:', token ? 'Var' : 'Yok'); // Token kontrolü
         return config;
     },
     (error) => {
-        console.error('Request Error:', error);
         return Promise.reject(error);
     }
 );
@@ -33,11 +36,16 @@ api.interceptors.request.use(
 // Response interceptor
 api.interceptors.response.use(
     (response) => {
-        console.log('API Response:', response.status, response.config.url);
+        // PDF yanıtlarını özel işle
+        if (response.config.url.includes('/pdf/')) {
+            console.log('PDF Response:', response.status, 'Size:', response.data?.size);
+        } else {
+            console.log('API Response:', response.status, response.config.url);
+        }
         return response;
     },
     (error) => {
-        console.error('Response Error:', error.response || error);
+        console.error('API Error:', error.response?.status, error.message);
 
         if (error.response?.status === 401) {
             localStorage.removeItem('token');

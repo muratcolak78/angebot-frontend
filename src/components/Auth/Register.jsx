@@ -115,7 +115,7 @@ export default function Register() {
                         </p>
                         <div className="bg-white/10 rounded-lg p-8 backdrop-blur-lg">
                             <div className="aspect-video bg-white/20 rounded flex items-center justify-center">
-                                <span className="text-white/60">Video Reklam Alanı</span>
+                                <span className="text-white/60">Video-Werbefläche</span>
                             </div>
                         </div>
                     </div>

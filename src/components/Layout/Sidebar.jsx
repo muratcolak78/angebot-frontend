@@ -7,7 +7,8 @@ import {
     FileText,
     LogOut,
     Menu,
-    X
+    X,
+    Users
 } from 'lucide-react';
 import { useState } from 'react';
 import Button from '../Common/Button';
@@ -29,6 +30,11 @@ export default function Sidebar() {
             path: '/',
             name: 'Dashboard',
             icon: <LayoutDashboard className="h-5 w-5" />
+        },
+        {
+            path: '/customers',
+            name: 'Kunden',
+            icon: <Users className="h-5 w-5" />
         },
         {
             path: '/settings',

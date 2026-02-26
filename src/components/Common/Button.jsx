@@ -1,3 +1,4 @@
+// components/Common/Button.jsx
 export default function Button({
     children,
     variant = 'primary',
@@ -21,9 +22,12 @@ export default function Button({
         lg: 'px-6 py-3 text-lg'
     };
 
+    // Eğer variant outline değilse ve className'de bg-white varsa, variant'ı ez
+    const variantClass = className.includes('bg-white') ? '' : variants[variant];
+
     return (
         <button
-            className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className} ${disabled || loading ? 'cursor-not-allowed' : ''
+            className={`${baseClasses} ${variantClass} ${sizes[size]} ${className} ${disabled || loading ? 'cursor-not-allowed' : ''
                 }`}
             disabled={disabled || loading}
             {...props}

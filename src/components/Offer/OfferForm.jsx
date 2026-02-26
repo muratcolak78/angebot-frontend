@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Save, FileText, Download, X, Mail } from 'lucide-react';
 import Button from '../Common/Button';
 import Input from '../Common/Input';
@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 
 export default function OfferForm() {
     const { id } = useParams();
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
@@ -34,10 +35,14 @@ export default function OfferForm() {
     useEffect(() => {
         fetchCustomers();
         fetchRateCard();
+        const customerIdFromUrl = searchParams.get('customerId');
+        if (customerIdFromUrl) {
+            setFormData(prev => ({ ...prev, customerId: customerIdFromUrl }));
+        }
         if (id) {
             fetchOffer();
         }
-    }, [id]);
+    }, [id], searchParams);
 
     useEffect(() => {
         calculateTotals();
@@ -301,14 +306,14 @@ export default function OfferForm() {
                             onClick={() => navigate('/')}
                         >
                             <X className="h-4 w-4 mr-2" />
-                            Abbrechnen
+                            Abbrechen
                         </Button>
                         <Button
                             type="submit"
                             loading={saving}
                         >
                             <Save className="h-4 w-4 mr-2" />
-                            {id ? 'Güncelle' : 'Teklif Oluştur'}
+                            {id ? 'Update' : 'Angebot erstellen'}
                         </Button>
                     </div>
                 </form>

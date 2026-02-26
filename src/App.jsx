@@ -9,6 +9,9 @@ import DashboardLayout from './components/Layout/DashboardLayout';
 import SettingsForm from './components/Settings/SettingsForm';
 import RateCardForm from './components/RateCard/RateCardForm';
 import OfferForm from './components/Offer/OfferForm';
+import OfferPreview from './components/Offer/OfferPreview';
+import CustomerList from './components/Customer/CustomerList';
+import CustomerForm from './components/Customer/CustomerForm';
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -26,7 +29,16 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Toaster position="top-right" />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+            },
+          }}
+        />
         <Routes>
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
@@ -43,6 +55,10 @@ function App() {
             <Route path="ratecard" element={<RateCardForm />} />
             <Route path="offers/new" element={<OfferForm />} />
             <Route path="offers/:id" element={<OfferForm />} />
+            <Route path="customers" element={<CustomerList />} />
+            <Route path="customers/new" element={<CustomerForm />} />
+            <Route path="customers/edit/:id" element={<CustomerForm />} />
+            <Route path="offers/:id/preview" element={<OfferPreview />} />
           </Route>
         </Routes>
       </AuthProvider>

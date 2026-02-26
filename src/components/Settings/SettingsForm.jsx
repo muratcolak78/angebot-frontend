@@ -108,7 +108,7 @@ export default function SettingsForm() {
     return (
         <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg shadow-sm p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Şirket Ayarları</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Unternehmenseinstellungen</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Kişisel Bilgiler */}
@@ -283,7 +283,7 @@ export default function SettingsForm() {
                             variant="outline"
                             onClick={() => navigate('/')}
                         >
-                            Abbrechnen
+                            Abbrechen
                         </Button>
                         <Button
                             type="submit"

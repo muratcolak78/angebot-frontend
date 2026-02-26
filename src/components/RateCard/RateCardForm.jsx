@@ -78,7 +78,7 @@ export default function RateCardForm() {
     return (
         <div className="max-w-3xl mx-auto">
             <div className="bg-white rounded-lg shadow-sm p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Fiyat Kartı</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Preiskarte</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* KOsten*/}
@@ -169,7 +169,7 @@ export default function RateCardForm() {
                             variant="outline"
                             onClick={() => navigate('/')}
                         >
-                            Abbrechnen
+                            Abbrechen
                         </Button>
                         <Button
                             type="submit"
