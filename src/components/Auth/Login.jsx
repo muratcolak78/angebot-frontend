@@ -107,22 +107,6 @@ export default function Login() {
                     <source src="/videos/angebot.mp4" type="video/mp4" />
                 </video>
 
-                {/* Hafif karartma (çok az) */}
-                <div className="absolute inset-0 bg-black/20" />
-
-                {/* Üstte yazı paneli */}
-                <div className="relative h-full flex flex-col justify-end p-10">
-                    <div className="max-w-xl rounded-2xl bg-white/15 backdrop-blur-xl border border-white/20 p-8 shadow-2xl">
-                        <h3 className="text-4xl font-bold text-white mb-4">
-                            Professionelles Angebotsmanagement
-                        </h3>
-
-                        <p className="text-lg text-white/90 leading-relaxed">
-                            Erstellen Sie Angebote in Sekunden, exportieren Sie PDFs automatisch
-                            und senden Sie sie direkt an Ihre Kunden.
-                        </p>
-                    </div>
-                </div>
             </div>
 
         </div>
