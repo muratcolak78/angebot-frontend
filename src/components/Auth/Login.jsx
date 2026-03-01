@@ -86,14 +86,14 @@ export default function Login() {
 
             {/* ================= RIGHT SIDE ================= */}
             <div className="w-1/2 bg-gray-50 flex flex-col items-center justify-center">
-                <div className="max-w-md text-center">
-                    {/* Text oben */}
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                <div className="max-w-2xl text-center">
+                    {/* Text oben - büyütüldü */}
+                    <h3 className="text-4xl font-bold text-gray-800 mb-8 leading-tight">
                         10 Minuten registrieren,<br />2 Minuten Angebot erstellen
                     </h3>
 
-                    {/* Video Container - kleiner und zentriert */}
-                    <div className="rounded-lg overflow-hidden shadow-lg">
+                    {/* Video Container - büyütüldü */}
+                    <div className="rounded-xl overflow-hidden shadow-2xl">
                         <video
                             autoPlay
                             loop
