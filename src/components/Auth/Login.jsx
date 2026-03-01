@@ -86,22 +86,18 @@ export default function Login() {
                         </p>
                         {/* Video veya Reklam İçeriği */}
                         <div className="bg-white/10 rounded-lg p-8 backdrop-blur-lg">
-                            <div className="aspect-video bg-white/20 rounded flex items-center justify-center">
-                                <div className="relative aspect-video rounded overflow-hidden shadow-2xl">
-                                    <video
-                                        autoPlay
-                                        muted
-                                        loop
-                                        playsInline
-                                        preload="auto"
-                                        className="w-full h-full object-cover"
-                                    >
-                                        <source src="/videos/angebot.mp4" type="video/mp4" />
-                                    </video>
+                            <div className="hidden lg:block relative w-0 flex-1 overflow-hidden">
+                                <video
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                >
+                                    <source src="/videos/angebot.mp4" type="video/mp4" />
+                                </video>
 
-                                    {/* Hafif karartma */}
-                                    <div className="absolute inset-0 bg-black/30"></div>
-                                </div>
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary-600/70 to-primary-900/70"></div>
                             </div>
                         </div>
                     </div>
