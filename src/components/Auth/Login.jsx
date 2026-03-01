@@ -87,7 +87,21 @@ export default function Login() {
                         {/* Video veya Reklam İçeriği */}
                         <div className="bg-white/10 rounded-lg p-8 backdrop-blur-lg">
                             <div className="aspect-video bg-white/20 rounded flex items-center justify-center">
-                                <span className="text-white/60">Video-Werbefläche</span>
+                                <div className="relative aspect-video rounded overflow-hidden shadow-2xl">
+                                    <video
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
+                                        preload="auto"
+                                        className="w-full h-full object-cover"
+                                    >
+                                        <source src="/videos/angebot.mp4" type="video/mp4" />
+                                    </video>
+
+                                    {/* Hafif karartma */}
+                                    <div className="absolute inset-0 bg-black/30"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
