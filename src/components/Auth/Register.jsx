@@ -37,12 +37,13 @@ export default function Register() {
     };
 
     return (
-        <div className="min-h-screen flex">
-            {/* Sol Taraf - Register Form */}
-            <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8">
+        <div className="min-h-screen flex flex-col lg:flex-row">
+
+            {/* ================= LEFT SIDE REGISTER ================= */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-6 py-8 lg:px-12 bg-white order-2 lg:order-1">
+                <div className="max-w-md w-full space-y-6 sm:space-y-8">
                     <div>
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                        <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-gray-900">
                             Neues Konto erstellen
                         </h2>
                         <p className="mt-2 text-center text-sm text-gray-600">
@@ -50,11 +51,11 @@ export default function Register() {
                         </p>
                     </div>
 
-                    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                        <div className="space-y-4">
+                    <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+                        <div className="space-y-3 sm:space-y-4">
                             <Input
                                 type="email"
-                                placeholder="Ihre E-Mail Adresse"
+                                placeholder="Ihre E-Mail"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 icon={<Mail className="h-5 w-5 text-gray-400" />}
@@ -72,7 +73,7 @@ export default function Register() {
 
                             <Input
                                 type="password"
-                                placeholder="Geben Sie Ihr Passwort erneut ein"
+                                placeholder="Passwort wiederholen"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 icon={<Lock className="h-5 w-5 text-gray-400" />}
@@ -86,18 +87,20 @@ export default function Register() {
                             </div>
                         )}
 
-                        <div>
-                            <Button
-                                type="submit"
-                                loading={loading}
-                                className="w-full flex justify-center items-center"
-                            >
-                                Registrieren <UserPlus className="ml-2 h-5 w-5" />
-                            </Button>
-                        </div>
+                        <Button
+                            type="submit"
+                            loading={loading}
+                            className="w-full flex justify-center items-center"
+                        >
+                            Registrieren
+                            <UserPlus className="ml-2 h-5 w-5" />
+                        </Button>
 
                         <div className="text-center">
-                            <Link to="/login" className="text-sm text-primary-600 hover:text-primary-500">
+                            <Link
+                                to="/login"
+                                className="text-sm text-primary-600 hover:text-primary-500"
+                            >
                                 Haben Sie bereits ein Konto? Anmelden
                             </Link>
                         </div>
@@ -105,22 +108,30 @@ export default function Register() {
                 </div>
             </div>
 
-            {/* Sağ Taraf - Reklam/Video Alanı */}
-            <div className="hidden lg:block relative w-0 flex-1 bg-gradient-to-br from-primary-500 to-primary-700">
-                <div className="absolute inset-0 flex items-center justify-center text-white p-12">
-                    <div className="text-center">
-                        <h3 className="text-2xl font-bold mb-4">Professionelles Angebotsmanagement</h3>
-                        <p className="text-lg opacity-90 mb-8">
-                            Erstellen Sie schnell und professionell Angebote für Ihre Kunden
-                        </p>
-                        <div className="bg-white/10 rounded-lg p-8 backdrop-blur-lg">
-                            <div className="aspect-video bg-white/20 rounded flex items-center justify-center">
-                                <span className="text-white/60">Video-Werbefläche</span>
-                            </div>
-                        </div>
+            {/* ================= RIGHT SIDE PROMO ================= */}
+            <div className="w-full lg:w-1/2 bg-gradient-to-br from-primary-50 to-gray-50 flex items-center justify-center p-6 lg:p-8 order-1 lg:order-2">
+                <div className="max-w-md lg:max-w-2xl text-center">
+                    {/* Text oben - mobil daha küçük */}
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 lg:mb-8 leading-tight">
+                        10 Minuten registrieren,<br />2 Minuten Angebot erstellen
+                    </h3>
+
+                    {/* Video Container - mobil tam genişlik */}
+                    <div className="rounded-lg lg:rounded-xl overflow-hidden shadow-lg lg:shadow-2xl">
+                        <video
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            preload="auto"
+                            className="w-full h-auto"
+                        >
+                            <source src="/videos/angebot.mp4" type="video/mp4" />
+                        </video>
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }
