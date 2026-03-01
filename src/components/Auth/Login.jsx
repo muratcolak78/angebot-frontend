@@ -112,20 +112,6 @@ export default function Login() {
                 {/* Content Container */}
                 <div className="relative z-10 max-w-lg text-white">
 
-                    {/* Kleinere Video Box */}
-                    <div className="mb-8 rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20">
-                        <video
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            preload="auto"
-                            className="w-full h-48 object-cover"
-                        >
-                            <source src="/videos/angebot.mp4" type="video/mp4" />
-                        </video>
-                    </div>
-
                     {/* Promo Text */}
                     <h2 className="text-4xl font-bold mb-4">
                         In 2 Minuten zum<br />professionellen Angebot
