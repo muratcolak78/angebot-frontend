@@ -95,7 +95,7 @@ export default function Login() {
             {/* ================= RIGHT SIDE VIDEO ================= */}
             <div className="hidden lg:block relative flex-1 overflow-hidden">
 
-                {/* FULLSCREEN VIDEO */}
+                {/* Video background */}
                 <video
                     autoPlay
                     muted
@@ -104,27 +104,23 @@ export default function Login() {
                     preload="auto"
                     className="absolute inset-0 w-full h-full object-cover"
                 >
-                    <source src="/videos/angebot.mp4" type="video/mp4" />
+                    <source src="/videos/angebot-demo.mp4" type="video/mp4" />
                 </video>
 
-                {/* DARK OVERLAY */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-600/70 to-primary-900/70" />
+                {/* Hafif karartma (çok az) */}
+                <div className="absolute inset-0 bg-black/20" />
 
-                {/* TEXT CONTENT */}
-                <div className="relative h-full flex items-center justify-center text-white p-12">
-
-                    <div className="text-center max-w-xl">
-
-                        <h3 className="text-4xl font-bold mb-6">
+                {/* Üstte yazı paneli */}
+                <div className="relative h-full flex flex-col justify-end p-10">
+                    <div className="max-w-xl rounded-2xl bg-white/15 backdrop-blur-xl border border-white/20 p-8 shadow-2xl">
+                        <h3 className="text-4xl font-bold text-white mb-4">
                             Professionelles Angebotsmanagement
                         </h3>
 
-                        <p className="text-lg opacity-90 leading-relaxed">
-                            Erstellen Sie Angebote in Sekunden,
-                            exportieren Sie PDFs automatisch
+                        <p className="text-lg text-white/90 leading-relaxed">
+                            Erstellen Sie Angebote in Sekunden, exportieren Sie PDFs automatisch
                             und senden Sie sie direkt an Ihre Kunden.
                         </p>
-
                     </div>
                 </div>
             </div>
