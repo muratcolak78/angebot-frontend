@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Mail, Lock, ArrowRight } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Clock, FileCheck, Rocket } from 'lucide-react';
 import Button from '../Common/Button';
 import Input from '../Common/Input';
 
@@ -31,7 +31,7 @@ export default function Login() {
         <div className="min-h-screen flex">
 
             {/* ================= LEFT SIDE LOGIN ================= */}
-            <div className="w-[40%] flex items-center justify-center px-6 lg:px-12 bg-white">
+            <div className="w-1/2 flex items-center justify-center px-6 lg:px-12 bg-white">
 
                 <div className="max-w-md w-full space-y-8">
 
@@ -92,21 +92,51 @@ export default function Login() {
             </div>
 
 
-            {/* ================= RIGHT SIDE VIDEO ================= */}
-            <div className="w-[60%] relative overflow-hidden">
+            {/* ================= RIGHT SIDE PROMO ================= */}
+            <div className="w-1/2 relative bg-gradient-to-br from-primary-900 to-primary-700 flex items-center justify-center p-8">
 
-                {/* Video background */}
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                    className="absolute inset-0 w-full h-full object-cover"
-                >
-                    <source src="/videos/angebot.mp4" type="video/mp4" />
-                </video>
+                {/* Video Container - Klein und zentriert */}
+                <div className="absolute inset-0 opacity-20">
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        className="w-full h-full object-cover"
+                    >
+                        <source src="/videos/angebot.mp4" type="video/mp4" />
+                    </video>
+                </div>
 
+                {/* Content Container */}
+                <div className="relative z-10 max-w-lg text-white">
+
+                    {/* Kleinere Video Box */}
+                    <div className="mb-8 rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20">
+                        <video
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            preload="auto"
+                            className="w-full h-48 object-cover"
+                        >
+                            <source src="/videos/angebot.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+
+                    {/* Promo Text */}
+                    <h2 className="text-4xl font-bold mb-4">
+                        In 2 Minuten zum<br />professionellen Angebot
+                    </h2>
+
+                    <p className="text-xl text-primary-100 mb-8">
+                        Erstellen Sie im Handumdrehen maßgeschneiderte Angebote und gewinnen Sie mehr Kunden
+                    </p>
+
+
+                </div>
             </div>
 
         </div>
