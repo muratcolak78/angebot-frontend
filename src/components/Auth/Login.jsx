@@ -93,12 +93,13 @@ export default function Login() {
 
 
             {/* ================= RIGHT SIDE VIDEO ================= */}
-            <div >
+            <div className="hidden lg:block relative flex-1 overflow-hidden">
 
                 {/* Video background */}
                 <video
                     autoPlay
                     loop
+                    muted
                     playsInline
                     preload="auto"
                     className="absolute inset-0 w-full h-full object-cover"
