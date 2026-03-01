@@ -31,7 +31,7 @@ export default function Login() {
         <div className="min-h-screen flex">
 
             {/* ================= LEFT SIDE LOGIN ================= */}
-            <div className="flex-1 flex items-center justify-center px-6 lg:px-12 bg-white">
+            <div className="w-[40%] flex items-center justify-center px-6 lg:px-12 bg-white">
 
                 <div className="max-w-md w-full space-y-8">
 
@@ -93,7 +93,7 @@ export default function Login() {
 
 
             {/* ================= RIGHT SIDE VIDEO ================= */}
-            <div className="hidden lg:block relative flex-1 overflow-hidden">
+            <div className="w-[60%] relative overflow-hidden">
 
                 {/* Video background */}
                 <video
