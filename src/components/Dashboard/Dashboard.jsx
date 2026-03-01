@@ -72,8 +72,8 @@ export default function Dashboard() {
             }
 
         } catch (error) {
-            console.error('Dashboard data fetch error:', error);
-            toast.error('Veriler yüklenirken hata oluştu!');
+            console.error('Fehler beim Abrufen von Dashboard-Daten:', error);
+            toast.error('Fehler beim Laden von Daten!');
         } finally {
             setLoading(false);
         }
@@ -157,7 +157,20 @@ export default function Dashboard() {
         }
     };
 
+    const handleSendOfferMail = async (offerId) => {
+        //const to = window.prompt("An wen soll ich sie schicken? (E-Mail)");
+        //if (!to) return;
 
+        try {
+            await api.post("/mail/offer", {
+                offerId
+            });
+            toast.success("E-Mail gesendet!");
+        } catch (err) {
+            console.error(err);
+            toast.error("E-Mail kann nicht gesendet werden!");
+        }
+    };
 
     const formatDate = (dateString) => {
         if (!dateString) return '';
@@ -404,7 +417,7 @@ export default function Dashboard() {
                                             <Download className="h-5 w-5" />
                                         </button>
                                         <button
-                                            onClick={() => {/* E-mail fonksiyonu eklenecek */ }}
+                                            onClick={() => handleSendOfferMail(offer.id)}
                                             className="p-2 text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100"
                                             title="Per E-Mail senden"
                                         >
@@ -450,7 +463,7 @@ export default function Dashboard() {
                                             <Download className="h-5 w-5" />
                                         </button>
                                         <button
-                                            onClick={() => {/* E-mail fonksiyonu eklenecek */ }}
+                                            onClick={() => handleSendOfferMail(offer.id)}
                                             className="p-2 text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100"
                                         >
                                             <Mail className="h-5 w-5" />
