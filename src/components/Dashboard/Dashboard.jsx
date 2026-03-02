@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import SendOfferMailModal from "../Offer/SendOfferMailModal";
 import {
     Settings, CreditCard, FileText, CheckCircle, AlertCircle,
     Eye, Download, Mail, Calendar, User, Euro, Trash2,
@@ -22,6 +23,8 @@ export default function Dashboard() {
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [mailModalOpen, setMailModalOpen] = useState(false);
+    const [selectedOffer, setSelectedOffer] = useState(null);
 
     useEffect(() => {
         fetchData();
@@ -159,18 +162,9 @@ export default function Dashboard() {
     };
 
     const handleSendOfferMail = async (offerId) => {
-        //const to = window.prompt("An wen soll ich sie schicken? (E-Mail)");
-        //if (!to) return;
 
-        try {
-            await api.post("/mail/offer", {
-                offerId
-            });
-            toast.success("E-Mail gesendet!");
-        } catch (err) {
-            console.error(err);
-            toast.error("E-Mail kann nicht gesendet werden!");
-        }
+        setSelectedOffer(offer);
+        setMailModalOpen(true);
     };
 
     const formatDate = (dateString) => {
@@ -502,7 +496,7 @@ export default function Dashboard() {
                                                     <Download className="h-5 w-5" />
                                                 </button>
                                                 <button
-                                                    onClick={() => handleSendOfferMail(offer.id)}
+                                                    onClick={() => handleSendOfferMail(offer)}
                                                     className="p-2 text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100"
                                                     title="Per E-Mail senden"
                                                 >
@@ -599,6 +593,14 @@ export default function Dashboard() {
                     )}
                 </div>
             </main>
+
+            <SendOfferMailModal
+                open={mailModalOpen}
+                onClose={() => setMailModalOpen(false)}
+                offerId={selectedOffer?.id}
+                registeredEmail={selectedOffer?.customerEmail}
+            />
+
         </div>
     );
 }
