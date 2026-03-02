@@ -12,7 +12,7 @@ export default function DashboardLayout() {
             {/* Mobil için üst bar */}
             <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-3 fixed top-0 left-0 right-0 z-10">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-xl font-bold text-primary-600">Angebot</h1>
+                    <h1 className="text-xl font-bold text-primary-600">>>>>> Angebot</h1>
                     <span className="text-sm text-gray-600">{user?.email}</span>
                 </div>
             </div>
