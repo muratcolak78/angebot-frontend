@@ -2,8 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-    Download, Mail, ArrowLeft, Printer, Edit,
-    FileText, Eye, Trash2
+    Download, ArrowLeft, Printer, FileText
 } from 'lucide-react';
 import Button from '../Common/Button';
 import LoadingSpinner from '../Common/LoadingSpinner';
@@ -17,7 +16,6 @@ export default function OfferPreview() {
     const [pdfUrl, setPdfUrl] = useState(null);
     const [error, setError] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
-    const [pdfBlob, setPdfBlob] = useState(null);
 
     // Mobil kontrolü
     useEffect(() => {
@@ -55,10 +53,6 @@ export default function OfferPreview() {
                 throw new Error('PDF boş');
             }
 
-            // Blob'u sakla
-            setPdfBlob(response.data);
-
-            // Normal URL oluştur
             const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
             setPdfUrl(url);
 
@@ -96,22 +90,6 @@ export default function OfferPreview() {
         }
     };
 
-    const handlePrint = () => {
-        if (pdfUrl) {
-            const printWindow = window.open(pdfUrl);
-            printWindow.print();
-        }
-    };
-
-    // Google Docs Viewer ile PDF göster
-    const getGoogleViewerUrl = () => {
-        if (!pdfBlob) return '';
-        // Blob'u geçici bir URL'e çevir
-        const blobUrl = URL.createObjectURL(pdfBlob);
-        // Google Docs Viewer URL'si
-        return `https://docs.google.com/viewer?url=${encodeURIComponent(blobUrl)}&embedded=true`;
-    };
-
     if (loading) {
         return (
             <div className="h-screen flex items-center justify-center">
@@ -128,7 +106,7 @@ export default function OfferPreview() {
                 <p className="text-gray-600 mb-4 text-center">{error}</p>
                 <Button onClick={() => navigate('/')}>
                     <ArrowLeft className="h-4 w-4 mr-2" />
-                    Zurück zum Dashboard
+                    Zurück
                 </Button>
             </div>
         );
@@ -137,53 +115,53 @@ export default function OfferPreview() {
     return (
         <div className="h-screen flex flex-col bg-gray-100">
             {/* Toolbar */}
-            <div className="bg-white border-b border-gray-200 px-2 sm:px-4 py-2 sm:py-3 shadow-sm">
+            <div className="bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <div className="flex items-center space-x-1 sm:space-x-2">
-                        <Button
-                            variant="outline"
-                            size={isMobile ? "sm" : "md"}
-                            onClick={() => navigate('/')}
-                            className="!px-2 sm:!px-4"
-                        >
-                            <ArrowLeft className="h-4 w-4 sm:mr-2" />
-                            {!isMobile && 'Zurück'}
-                        </Button>
-                        <span className="text-xs sm:text-sm text-gray-500 truncate max-w-[100px] sm:max-w-none">
-                            {!isMobile ? `Angebot #${id}` : `#${id}`}
-                        </span>
-                    </div>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/')}
+                    >
+                        <ArrowLeft className="h-4 w-4 mr-2" />
+                        Zurück
+                    </Button>
 
-                    <div className="flex items-center space-x-1 sm:space-x-2">
-                        <button
-                            onClick={handlePrint}
-                            className="p-1.5 sm:p-2 text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100"
-                            title="Drucken"
-                        >
-                            <Printer className="h-4 w-4 sm:h-5 sm:w-5" />
-                        </button>
+                    <div className="flex items-center space-x-2">
                         <button
                             onClick={handleDownload}
-                            className="p-1.5 sm:p-2 text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100"
+                            className="p-2 text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100"
                             title="PDF herunterladen"
                         >
-                            <Download className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <Download className="h-5 w-5" />
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* PDF Viewer */}
-            <div className="flex-1 p-2 sm:p-4 overflow-auto">
+            {/* PDF Viewer - Mobil için basit çözüm */}
+            <div className="flex-1 p-4">
                 {pdfUrl && (
                     <div className="w-full h-full">
                         {isMobile ? (
-                            // Mobil için Google Docs Viewer
-                            <iframe
-                                src={`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`}
-                                className="w-full h-full min-h-[600px] rounded-lg shadow-lg bg-white"
-                                title={`Angebot #${id}`}
-                            />
+                            // Mobil için: Ya göster ya da indir
+                            <div className="flex flex-col items-center justify-center h-full">
+                                <object
+                                    data={pdfUrl}
+                                    type="application/pdf"
+                                    className="w-full h-full min-h-[600px] rounded-lg shadow-lg bg-white"
+                                >
+                                    <div className="text-center p-8 bg-white rounded-lg shadow">
+                                        <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                                        <p className="text-gray-600 mb-4">
+                                            PDF kann nicht angezeigt werden
+                                        </p>
+                                        <Button onClick={handleDownload}>
+                                            <Download className="h-4 w-4 mr-2" />
+                                            PDF herunterladen
+                                        </Button>
+                                    </div>
+                                </object>
+                            </div>
                         ) : (
                             // Desktop için normal iframe
                             <iframe
@@ -195,23 +173,6 @@ export default function OfferPreview() {
                     </div>
                 )}
             </div>
-
-            {/* Mobil için alternatif - Google Viewer çalışmazsa */}
-            {isMobile && (
-                <div className="bg-white border-t border-gray-200 px-4 py-3 flex flex-col space-y-2">
-                    <p className="text-sm text-gray-600 text-center">
-                        PDF wird nicht angezeigt?
-                    </p>
-                    <Button
-                        variant="outline"
-                        className="w-full"
-                        onClick={handleDownload}
-                    >
-                        <Download className="h-4 w-4 mr-2" />
-                        PDF herunterladen
-                    </Button>
-                </div>
-            )}
         </div>
     );
 }
