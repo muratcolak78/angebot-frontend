@@ -22,10 +22,9 @@ export default function OfferPreview() {
     const [numPages, setNumPages] = useState(null);
     const [pageWidth, setPageWidth] = useState(0);
 
-    // Responsive width for Page rendering
     useEffect(() => {
         const calc = () => {
-            const w = Math.min(window.innerWidth, 1200) - 32; // padding reserve
+            const w = Math.min(window.innerWidth, 1200) - 32;
             setPageWidth(Math.max(320, w));
         };
         calc();
@@ -33,7 +32,6 @@ export default function OfferPreview() {
         return () => window.removeEventListener("resize", calc);
     }, []);
 
-    // Load PDF on id change
     useEffect(() => {
         loadPDF();
 
@@ -65,7 +63,6 @@ export default function OfferPreview() {
                 throw new Error("Leeres PDF");
             }
 
-            // Cleanup old blob url
             if (pdfUrl) window.URL.revokeObjectURL(pdfUrl);
 
             const url = window.URL.createObjectURL(
@@ -129,9 +126,7 @@ export default function OfferPreview() {
         return (
             <div className="h-screen flex flex-col items-center justify-center px-4">
                 <FileText className="h-16 w-16 text-red-400 mb-4" />
-                <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">
-                    Fehler
-                </h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Fehler</h2>
                 <p className="text-gray-600 mb-4 text-center">{error}</p>
 
                 <Button onClick={() => navigate("/")}>
@@ -165,7 +160,7 @@ export default function OfferPreview() {
                 </div>
             </div>
 
-            {/* PDF Viewer (works on mobile + desktop) */}
+            {/* PDF Viewer */}
             <div className="flex-1 p-4 overflow-auto">
                 {pdfUrl && (
                     <div className="max-w-5xl mx-auto">
@@ -180,11 +175,6 @@ export default function OfferPreview() {
                                 loading={
                                     <div className="p-6 text-center text-gray-600">
                                         PDF wird geladen…
-                                    </div>
-                                }
-                                error={
-                                    <div className="p-6 text-center text-gray-600">
-                                        Das PDF konnte nicht dargestellt werden.
                                     </div>
                                 }
                             >
