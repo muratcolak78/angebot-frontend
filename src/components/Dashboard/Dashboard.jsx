@@ -496,7 +496,7 @@ export default function Dashboard() {
                                                     <Download className="h-5 w-5" />
                                                 </button>
                                                 <button
-                                                    onClick={() => handleSendOfferMail(offer)}
+                                                    onClick={() => handleSendOfferMail(offer.id)}
                                                     className="p-2 text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100"
                                                     title="Per E-Mail senden"
                                                 >
@@ -548,7 +548,7 @@ export default function Dashboard() {
                                                     <Mail className="h-5 w-5" />
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDeleteOffer(offer.id)}
+                                                    onClick={() => handleDeleteOffer(offer)}
                                                     className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50"
                                                 >
                                                     <Trash2 className="h-5 w-5" />
