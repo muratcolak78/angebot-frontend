@@ -1,5 +1,5 @@
 // components/Offer/OfferPreview.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Download, ArrowLeft, FileText } from "lucide-react";
 import Button from "../Common/Button";
@@ -15,21 +15,39 @@ export default function OfferPreview() {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const viewerRef = useRef(null);
+
     const [loading, setLoading] = useState(true);
     const [pdfUrl, setPdfUrl] = useState(null);
     const [error, setError] = useState(null);
 
     const [numPages, setNumPages] = useState(null);
-    const [pageWidth, setPageWidth] = useState(0);
+    const [pageWidth, setPageWidth] = useState(640);
 
+    // Sharper rendering on high-DPI devices (e.g. Samsung S24)
+    const dpr = useMemo(() => {
+        if (typeof window === "undefined") return 1;
+        return Math.min(window.devicePixelRatio || 1, 2);
+    }, []);
+
+    // Measure the real available width (content area, not window)
     useEffect(() => {
-        const calc = () => {
-            const w = Math.min(window.innerWidth, 1200) - 32;
-            setPageWidth(Math.max(320, w));
+        if (!viewerRef.current) return;
+
+        const el = viewerRef.current;
+
+        const updateWidth = () => {
+            const w = el.clientWidth || 0;
+            // Safety margin to avoid horizontal clipping
+            setPageWidth(Math.max(320, Math.floor(w - 16)));
         };
-        calc();
-        window.addEventListener("resize", calc);
-        return () => window.removeEventListener("resize", calc);
+
+        updateWidth();
+
+        const ro = new ResizeObserver(() => updateWidth());
+        ro.observe(el);
+
+        return () => ro.disconnect();
     }, []);
 
     useEffect(() => {
@@ -54,9 +72,7 @@ export default function OfferPreview() {
 
             const response = await api.get(`/pdf/${id}`, {
                 responseType: "blob",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             if (!response.data || response.data.size === 0) {
@@ -94,9 +110,7 @@ export default function OfferPreview() {
 
             const response = await api.get(`/pdf/${id}`, {
                 responseType: "blob",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -126,7 +140,9 @@ export default function OfferPreview() {
         return (
             <div className="h-screen flex flex-col items-center justify-center px-4">
                 <FileText className="h-16 w-16 text-red-400 mb-4" />
-                <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Fehler</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">
+                    Fehler
+                </h2>
                 <p className="text-gray-600 mb-4 text-center">{error}</p>
 
                 <Button onClick={() => navigate("/")}>
@@ -161,34 +177,41 @@ export default function OfferPreview() {
             </div>
 
             {/* PDF Viewer */}
-            <div className="flex-1 p-4 overflow-auto">
+            <div className="flex-1 overflow-auto p-4">
                 {pdfUrl && (
-                    <div className="max-w-5xl mx-auto">
+                    <div className="max-w-6xl mx-auto">
                         <div className="bg-white rounded-lg shadow-lg p-2">
-                            <Document
-                                file={pdfUrl}
-                                onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-                                onLoadError={(e) => {
-                                    console.error("PDF-Render-Fehler:", e);
-                                    setError("Das PDF konnte nicht dargestellt werden.");
-                                }}
-                                loading={
-                                    <div className="p-6 text-center text-gray-600">
-                                        PDF wird geladen…
-                                    </div>
-                                }
-                            >
-                                {Array.from(new Array(numPages || 0), (_, index) => (
-                                    <div key={`p_${index + 1}`} className="my-3 flex justify-center">
-                                        <Page
-                                            pageNumber={index + 1}
-                                            width={pageWidth || 360}
-                                            renderAnnotationLayer={false}
-                                            renderTextLayer={false}
-                                        />
-                                    </div>
-                                ))}
-                            </Document>
+                            {/* Important: this element defines the REAL available width */}
+                            <div ref={viewerRef} className="w-full overflow-x-hidden">
+                                <Document
+                                    file={pdfUrl}
+                                    onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+                                    onLoadError={(e) => {
+                                        console.error("PDF-Render-Fehler:", e);
+                                        setError("Das PDF konnte nicht dargestellt werden.");
+                                    }}
+                                    loading={
+                                        <div className="p-6 text-center text-gray-600">
+                                            PDF wird geladen…
+                                        </div>
+                                    }
+                                >
+                                    {Array.from(new Array(numPages || 0), (_, index) => (
+                                        <div
+                                            key={`p_${index + 1}`}
+                                            className="my-4 flex justify-center"
+                                        >
+                                            <Page
+                                                pageNumber={index + 1}
+                                                width={pageWidth}
+                                                devicePixelRatio={dpr}
+                                                renderAnnotationLayer={false}
+                                                renderTextLayer={false}
+                                            />
+                                        </div>
+                                    ))}
+                                </Document>
+                            </div>
 
                             <div className="p-3 flex justify-center">
                                 <Button onClick={handleDownload}>
