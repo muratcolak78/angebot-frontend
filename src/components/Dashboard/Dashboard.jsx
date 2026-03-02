@@ -21,6 +21,7 @@ export default function Dashboard() {
     const [offers, setOffers] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -237,6 +238,18 @@ export default function Dashboard() {
     if (loading) {
         return <LoadingSpinner fullScreen />;
     }
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        navigate('/login');
+        toast.success('Erfolgreich abgemeldet');
+    };
+
+    if (loading) {
+        return <LoadingSpinner fullScreen />;
+    }
+
 
     return (
         <div className="space-y-8">
