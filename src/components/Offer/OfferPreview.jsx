@@ -17,6 +17,7 @@ export default function OfferPreview() {
     const [pdfUrl, setPdfUrl] = useState(null);
     const [error, setError] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
+    const [pdfBlob, setPdfBlob] = useState(null);
 
     // Mobil kontrolü
     useEffect(() => {
@@ -54,6 +55,10 @@ export default function OfferPreview() {
                 throw new Error('PDF boş');
             }
 
+            // Blob'u sakla
+            setPdfBlob(response.data);
+
+            // Normal URL oluştur
             const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
             setPdfUrl(url);
 
@@ -98,11 +103,19 @@ export default function OfferPreview() {
         }
     };
 
+    // Google Docs Viewer ile PDF göster
+    const getGoogleViewerUrl = () => {
+        if (!pdfBlob) return '';
+        // Blob'u geçici bir URL'e çevir
+        const blobUrl = URL.createObjectURL(pdfBlob);
+        // Google Docs Viewer URL'si
+        return `https://docs.google.com/viewer?url=${encodeURIComponent(blobUrl)}&embedded=true`;
+    };
+
     if (loading) {
         return (
             <div className="h-screen flex items-center justify-center">
                 <LoadingSpinner size="lg" />
-                <p className="ml-4 text-gray-600">PDF yükleniyor...</p>
             </div>
         );
     }
@@ -123,7 +136,7 @@ export default function OfferPreview() {
 
     return (
         <div className="h-screen flex flex-col bg-gray-100">
-            {/* Toolbar - Mobil için düzenlendi */}
+            {/* Toolbar */}
             <div className="bg-white border-b border-gray-200 px-2 sm:px-4 py-2 sm:py-3 shadow-sm">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
                     <div className="flex items-center space-x-1 sm:space-x-2">
@@ -160,31 +173,19 @@ export default function OfferPreview() {
                 </div>
             </div>
 
-            {/* PDF Viewer - Mobil için optimize edildi */}
+            {/* PDF Viewer */}
             <div className="flex-1 p-2 sm:p-4 overflow-auto">
                 {pdfUrl && (
-                    <div className="w-full h-full min-h-[500px]">
+                    <div className="w-full h-full">
                         {isMobile ? (
-                            // Mobil için alternatif görünüm
-                            <div className="flex flex-col items-center justify-center h-full">
-                                <object
-                                    data={pdfUrl}
-                                    type="application/pdf"
-                                    className="w-full h-full min-h-[600px] rounded-lg shadow-lg bg-white"
-                                >
-                                    <div className="text-center p-8">
-                                        <p className="text-gray-600 mb-4">
-                                            PDF auf Ihrem Gerät nicht sichtbar?
-                                        </p>
-                                        <Button onClick={handleDownload}>
-                                            <Download className="h-4 w-4 mr-2" />
-                                            PDF herunterladen
-                                        </Button>
-                                    </div>
-                                </object>
-                            </div>
+                            // Mobil için Google Docs Viewer
+                            <iframe
+                                src={`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`}
+                                className="w-full h-full min-h-[600px] rounded-lg shadow-lg bg-white"
+                                title={`Angebot #${id}`}
+                            />
                         ) : (
-                            // Desktop için iframe
+                            // Desktop için normal iframe
                             <iframe
                                 src={pdfUrl}
                                 className="w-full h-full rounded-lg shadow-lg bg-white"
@@ -195,9 +196,12 @@ export default function OfferPreview() {
                 )}
             </div>
 
-            {/* Mobil için alt bilgi */}
+            {/* Mobil için alternatif - Google Viewer çalışmazsa */}
             {isMobile && (
-                <div className="bg-white border-t border-gray-200 px-4 py-3">
+                <div className="bg-white border-t border-gray-200 px-4 py-3 flex flex-col space-y-2">
+                    <p className="text-sm text-gray-600 text-center">
+                        PDF wird nicht angezeigt?
+                    </p>
                     <Button
                         variant="outline"
                         className="w-full"
